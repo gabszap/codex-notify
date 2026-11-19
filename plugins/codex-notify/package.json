@@ -1,10 +1,12 @@
 {
   "name": "codex-notify",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "private": true,
   "scripts": {
     "register-notifications": "node hooks/windows-identity.cjs register",
-    "unregister-notifications": "node hooks/windows-identity.cjs unregister"
+    "unregister-notifications": "node hooks/windows-identity.cjs unregister",
+    "register-antigravity": "node antigravity/setup.cjs install",
+    "unregister-antigravity": "node antigravity/setup.cjs uninstall"
   },
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
