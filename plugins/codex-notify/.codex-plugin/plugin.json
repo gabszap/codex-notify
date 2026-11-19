@@ -1,0 +1,12 @@
+{
+  "name": "codex-notify",
+  "version": "0.3.0",
+  "description": "Notificações no Windows para pedidos de permissão e turnos concluídos no Codex.",
+  "hooks": "./hooks/hooks.json",
+  "requires_local_executor": true,
+  "interface": {
+    "displayName": "Codex Notify",
+    "shortDescription": "Avisos do Codex no Windows",
+    "category": "Productivity"
+  }
+}

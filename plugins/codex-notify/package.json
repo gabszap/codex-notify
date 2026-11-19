@@ -1,0 +1,15 @@
+{
+  "name": "codex-notify",
+  "version": "0.3.0",
+  "private": true,
+  "scripts": {
+    "register-notifications": "node hooks/windows-identity.cjs register",
+    "unregister-notifications": "node hooks/windows-identity.cjs unregister"
+  },
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
+  "dependencies": {
+    "node-notifier": "12.1.0"
+  }
+}

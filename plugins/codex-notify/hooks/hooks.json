@@ -1,0 +1,30 @@
+{
+  "hooks": {
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '%s\\n' '{}'",
+            "commandWindows": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks','notify.cjs')).main()\"",
+            "async": true,
+            "timeout": 15
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '%s\\n' '{}'",
+            "commandWindows": "node -e \"require(require('node:path').join(process.env.PLUGIN_ROOT,'hooks','notify.cjs')).main()\"",
+            "async": true,
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}
