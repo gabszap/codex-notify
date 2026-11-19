@@ -33,11 +33,13 @@ function getNotification(event) {
           ? `Codex precisa da sua permissão · ${project}`
           : 'Codex precisa da sua permissão',
         message: permissionMessage(event),
+        sound: 'Notification.Reminder',
       };
     case 'Stop':
       return {
         title: 'Codex terminou o turno',
         message: project ? `Veja a resposta em ${project}.` : 'Veja a resposta no Codex.',
+        sound: 'Notification.Default',
       };
   }
 }

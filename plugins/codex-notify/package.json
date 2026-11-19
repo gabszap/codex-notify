@@ -1,6 +1,6 @@
 {
   "name": "codex-notify",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "private": true,
   "scripts": {
     "register-notifications": "node hooks/windows-identity.cjs register",

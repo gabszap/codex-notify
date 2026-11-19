@@ -22,6 +22,7 @@ test('sends the reason and project for a permission request with a neutral respo
   assert.deepEqual(sent, [{
     title: 'Codex precisa da sua permissão · Projeto Açúcar',
     message: 'Permitir acesso ao npm para instalar as dependências?',
+    sound: 'Notification.Reminder',
   }]);
   assert.deepEqual(result, {});
 });
@@ -61,6 +62,7 @@ test('sends a completion alert without including the assistant reply', async () 
   assert.deepEqual(sent, [{
     title: 'Codex terminou o turno',
     message: 'Veja a resposta no Codex.',
+    sound: 'Notification.Default',
   }]);
   assert.deepEqual(result, {});
 });
