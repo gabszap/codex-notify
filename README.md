@@ -52,6 +52,33 @@ Ask Codex to reply with just “OK” to send a completion alert. You can also t
 - **The sender says SnoreToast.** Run the registration command from the installation steps.
 - **Manual tests work but Codex sends nothing.** Verify that both hooks are trusted and enabled. Keep your local session open while the hook runs in the background. [Codex hooks][hooks]
 
+### Antigravity CLI on Windows
+
+Use the same Windows notifications with `agy`. Run `npm ci` and `register-notifications` from the installation steps if you are setting up Codex Notify for the first time.
+
+- **Regular `agy` terminal.** Run the command below and restart `agy`. Open `/hooks`, select **Stop**, and check that **codex-notify-stop** is enabled. This adds a completion alert. Run `npm run unregister-antigravity --prefix .\plugins\codex-notify` to remove that hook from your global Antigravity settings. [Antigravity hooks][agy-hooks]
+- **ACP client or editor.** Start the proxy below as your ACP server to get both completion alerts and real approval alerts. Approve or deny requests in the client as usual. [Antigravity via ACP][agy-acp]
+
+```powershell
+npm run register-antigravity --prefix .\plugins\codex-notify
+```
+
+Example custom ACP agent in Zed. Replace the path with the absolute path to your checkout. The proxy uses `agy` from PATH or the full executable path set in `AGY_EXECUTABLE`.
+
+```json
+{
+  "agent_servers": {
+    "Antigravity with notifications": {
+      "type": "custom",
+      "command": "node",
+      "args": ["C:/path/to/codex-notify/plugins/codex-notify/antigravity/acp.cjs"]
+    }
+  }
+}
+```
+
+The sender stays **Codex Notify**. The notification title identifies Antigravity. Your usual Antigravity sign-in applies to ACP sessions.
+
 ### Uninstall
 
 ```powershell
@@ -110,6 +137,21 @@ Peça ao Codex para responder só com “OK” e teste o aviso de conclusão. Pa
 - **O remetente aparece como SnoreToast.** Rode o comando de registro da instalação.
 - **O teste manual funciona, mas o Codex não avisa.** Confira se os dois hooks estão ativos e confiáveis. Deixe a conversa local aberta enquanto o hook roda em segundo plano. [Hooks do Codex][hooks]
 
+### Antigravity CLI no Windows
+
+Use os mesmos avisos do Windows com o `agy`. Se for a primeira instalação do Codex Notify, rode o `npm ci` e o registro de notificações da seção de instalação.
+
+- **Terminal normal do `agy`.** Rode o comando abaixo e reinicie o `agy`. Abra `/hooks`, selecione **Stop** e confira se **codex-notify-stop** está ativo. Isso adiciona o aviso de conclusão. Para remover o hook da configuração global do Antigravity, rode `npm run unregister-antigravity --prefix .\plugins\codex-notify`. [Hooks do Antigravity][agy-hooks]
+- **Cliente ACP ou editor.** Configure o proxy como servidor ACP para receber os avisos de conclusão e de pedidos reais de permissão. Aprove ou negue na interface do cliente. [Antigravity via ACP][agy-acp]
+
+```powershell
+npm run register-antigravity --prefix .\plugins\codex-notify
+```
+
+Configure o cliente com `node` como comando e o caminho absoluto para `plugins/codex-notify/antigravity/acp.cjs` como argumento, conforme o [exemplo do Zed](#antigravity-cli-on-windows). O proxy usa o `agy` do PATH ou o caminho indicado em `AGY_EXECUTABLE`.
+
+O remetente é **Codex Notify** e o título do aviso identifica o Antigravity. A sessão ACP usa o login do Antigravity.
+
 ### Desinstalação
 
 ```powershell
@@ -127,3 +169,5 @@ The blue Codex icon comes from OpenAI's Windows app. · O ícone azul do Codex v
 [plugins]: https://developers.openai.com/plugins/build/plugins#install-a-local-plugin-manually
 [trust]: https://learn.chatgpt.com/docs/hooks#review-and-trust-hooks
 [windows]: https://support.microsoft.com/en-gb/windows/experience/notifications-and-do-not-disturb-in-windows
+[agy-hooks]: https://antigravity.google/docs/hooks#managing-hooks-in-antigravity-cli
+[agy-acp]: https://antigravity.google/docs/ide/extensions/acp

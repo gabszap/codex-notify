@@ -2,7 +2,7 @@ const { readFileSync } = require('node:fs');
 const { win32: path } = require('node:path');
 const { notificationIdentity } = require('./windows-identity.cjs');
 
-function permissionMessage(event) {
+function permissionMessage(event, agent) {
   const reason = event.tool_input?.description;
   if (typeof reason === 'string' && reason.trim()) {
     const text = [...reason.replace(/\s+/g, ' ').trim()];
@@ -20,25 +20,25 @@ function permissionMessage(event) {
     }
     return `Usar a ferramenta ${tool}.`;
   }
-  return 'O Codex aguarda sua aprovação.';
+  return `O ${agent} aguarda sua aprovação.`;
 }
 
-function getNotification(event) {
+function getNotification(event, agent) {
   const project = typeof event?.cwd === 'string' ? path.basename(event.cwd) : '';
 
   switch (event?.hook_event_name) {
     case 'PermissionRequest':
       return {
         title: project
-          ? `Codex precisa da sua permissão · ${project}`
-          : 'Codex precisa da sua permissão',
-        message: permissionMessage(event),
+          ? `${agent} precisa da sua permissão · ${project}`
+          : `${agent} precisa da sua permissão`,
+        message: permissionMessage(event, agent),
         sound: 'Notification.Reminder',
       };
     case 'Stop':
       return {
-        title: 'Codex terminou o turno',
-        message: project ? `Veja a resposta em ${project}.` : 'Veja a resposta no Codex.',
+        title: `${agent} terminou o turno`,
+        message: project ? `Veja a resposta em ${project}.` : `Veja a resposta no ${agent}.`,
         sound: 'Notification.Default',
       };
   }
@@ -58,14 +58,14 @@ function sendNotification(notification) {
   });
 }
 
-async function run(input, { preview = false, send = sendNotification } = {}) {
+async function run(input, { preview = false, send = sendNotification, agent = 'Codex' } = {}) {
   let event;
   try {
     event = JSON.parse(input);
   } catch {
     return {};
   }
-  const notification = getNotification(event);
+  const notification = getNotification(event, agent);
   if (notification) {
     if (preview) return notification;
     await send(notification);
@@ -77,6 +77,7 @@ async function main() {
   try {
     const result = await run(readFileSync(0, 'utf8'), {
       preview: process.argv.includes('--preview'),
+      agent: process.argv.includes('--antigravity') ? 'Antigravity' : 'Codex',
     });
     console.log(JSON.stringify(result));
   } catch (error) {
